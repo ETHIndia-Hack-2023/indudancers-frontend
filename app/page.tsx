@@ -5,10 +5,10 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main className="flex flex-row items-center justify-between min-h-screen p-24">
-      <div className="flex-[3]">
+      <div className="flex-[3] rounded-xl">
         <GameCanvas></GameCanvas>
       </div>
-      <div className="flex-[1]">
+      <div className="flex-[1] rounded-xl">
         <Chat />
       </div>
     </main>
