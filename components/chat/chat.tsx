@@ -1,22 +1,42 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ChatMessages from './chat-messages'
 import SendMessageButton from './send-btn'
+import { Input } from '../ui/input'
 
 type Props = {}
 
 export default function Chat({}: Props) {
+  const inputRef = React.createRef<HTMLInputElement>()
+  const [sendState, setSendState] = useState(false)
+
+  function onSendAction() {
+    alert('send message with: ' + inputRef.current?.value)
+    inputRef.current!.value = ''
+    setSendState(!sendState)
+  }
+
   return (
-    <div className="flex flex-col min-w-[300px] min-h-[600px] bg-cyan-400 rounded-2xl p-5">
+    <div className="flex flex-col flex-1 max-h-full bg-cyan-400 rounded-2xl">
       <div>Chat</div>
-      <div className="flex-1 h-full m-5">
+      <div className="flex-1 m-5 overflow-scroll">
         <ChatMessages></ChatMessages>
       </div>
       <div className="flex gap-5">
-        <input></input>
-        <div className="mt-auto">
-          <SendMessageButton message="saasdsad"></SendMessageButton>
+        <Input
+          ref={inputRef}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onSendAction()
+            }
+          }}
+        ></Input>
+        <div className="">
+          <SendMessageButton
+            onClick={onSendAction}
+            message="saasdsad"
+          ></SendMessageButton>
         </div>
       </div>
     </div>

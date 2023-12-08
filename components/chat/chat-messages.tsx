@@ -19,11 +19,51 @@ export default function ChatMessages({}: Props) {
       text: 'asdasdasd',
       timestamp: new Date(),
     },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
+    {
+      isClientUser: false,
+      nickname: 'aaaa',
+      text: 'asdasdasd',
+      timestamp: new Date(),
+    },
   ]
 
   const messageComponents = messages.map((p, i) => {
     return <Message key={i} {...p}></Message>
   })
 
-  return <div className="h-full bg-fuchsia-400">{messageComponents}</div>
+  return (
+    <div className="flex flex-col gap-2 bg-fuchsia-400">
+      {messageComponents}
+    </div>
+  )
 }
