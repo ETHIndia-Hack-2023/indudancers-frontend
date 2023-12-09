@@ -1,4 +1,5 @@
 import { defineChain } from 'viem'
+import { scrollSepolia } from 'viem/chains'
 
 export const stylusTestnet = defineChain({
     id: 23011913,
@@ -27,4 +28,5 @@ export const stylusTestnet = defineChain({
 
 export const SuppurtedChains = [
     stylusTestnet,
+    scrollSepolia
 ]
