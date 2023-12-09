@@ -28,7 +28,7 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   const minRnd = -10
   const maxRnd = 10
 
-  const dancerProps: IndiDancerProps[] = [
+  const dancerProps: HeroDancerProps[] = [
     { x: 0, y: 0 },
     { x: 150, y: 0 },
     { x: 300, y: 0 },
@@ -53,7 +53,7 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
     console.log('FOUND BOUGHT!!!!')
 
     return (
-      <IndiDancer
+      <DanceHero
         x={i.x + getRndInteger(minRnd, maxRnd)}
         y={i.y + getRndInteger(minRnd, maxRnd)}
         key={`${x}:${y}`}
@@ -74,12 +74,12 @@ function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-type IndiDancerProps = {
+type HeroDancerProps = {
   x: number
   y: number
 }
 
-const IndiDancer = ({ x, y }: IndiDancerProps) => {
+const DanceHero = ({ x, y }: HeroDancerProps) => {
   const alienImages = ['dance_1.png', 'dance_2.png']
   const textureArray: PIXI.Texture[] = []
 

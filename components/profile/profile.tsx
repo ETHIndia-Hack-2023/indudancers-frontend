@@ -76,7 +76,7 @@ export default function Profile() {
 
   if (isConnected)
     return (
-      <div className="flex flex-row items-center w-full gap-4 rounded-md bg-accent-one_darker rounded-3xl p-1">
+      <div className="flex flex-row items-center w-full gap-4 bg-accent-one_darker rounded-3xl p-1">
         <Avatar>
           <AvatarImage src="ensName" />
           <AvatarFallback>CN</AvatarFallback>

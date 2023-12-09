@@ -11,15 +11,15 @@ export default function Room(props: RoomProps) {
   const { encoder } = useContentPair()
   const { push: onPush } = useLightPush({ node, encoder })
 
-  // const {
-  //   connectedBootstrapPeers,
-  //   connectedPeerExchangePeers,
-  //   discoveredBootstrapPeers,
-  //   discoveredPeerExchangePeers,
-  // } = useNodePeers(node)
-  // const { allConnected, storePeers, filterPeers, lightPushPeers } = usePeers({
-  //   node,
-  // })
+  const {
+    connectedBootstrapPeers,
+    connectedPeerExchangePeers,
+    discoveredBootstrapPeers,
+    discoveredPeerExchangePeers,
+  } = useNodePeers(node)
+  const { allConnected, storePeers, filterPeers, lightPushPeers } = usePeers({
+    node,
+  })
 
   const onSend = async (text: string) => {
     if (!onPush || !text) {
@@ -42,7 +42,7 @@ export default function Room(props: RoomProps) {
   }
 
   // const allConnectedLength = orZero(allConnected?.length)
-  // const lightPushPeersLength = orZero(lightPushPeers?.length)
+  const lightPushPeersLength = orZero(lightPushPeers?.length)
   // const filterPeersLength = orZero(filterPeers?.length)
   // const storePeersLength = orZero(storePeers?.length)
 
@@ -51,10 +51,10 @@ export default function Room(props: RoomProps) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-between items-center bg-gray-800 text-white p-4">
-        <div>Room</div>
+        <div>Global Chat</div>
       </div>
-      <ChatList isLoading={false} messages={props.messages} />
-      <MessageInput hasLightPushPeers={true} sendMessage={onSend} />
+      <ChatList isLoading={!lightPushPeers} messages={props.messages} />
+      <MessageInput hasLightPushPeers={!!lightPushPeers} sendMessage={onSend} />
     </div>
   )
 }

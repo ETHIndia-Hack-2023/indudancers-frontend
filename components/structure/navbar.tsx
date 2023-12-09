@@ -8,7 +8,7 @@ type Props = {}
 
 export default function Navbar({}: Props) {
   return (
-    <div className="sticky flex w-full items-center pl-6 pr-6 p-2 mb-5 bg-accent-one top-2 min-h-min rounded-3xl gap-10">
+    <div className="sticky flex w-full items-center pl-6 pr-6 p-2 mb-5 bg-accent-one top-2 min-h-min rounded-3xl gap-10 shadow-2xl shadow-[6px_6px_0px_0px_rgba(200,142,60)]">
       <ProjectName />
       <Link
         href="/leaderboard"

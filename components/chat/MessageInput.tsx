@@ -62,6 +62,7 @@ export default function MessageInput(props: MessageInputProps) {
         onKeyDown={onKeyDown}
         className="flex-grow p-2 border border-gray-300 rounded-l-md"
         placeholder="Type your message..."
+        disabled={!isActive}
       />
       <Button
         onClick={onMessage}

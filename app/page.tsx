@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center min-h-screen gap-3">
+    <main className="flex flex-col items-center min-h-screen max-h-screen gap-3">
       <Navbar></Navbar>
       <div className="flex flex-row justify-start w-full gap-5 max-h-1/2">
         <div className="flex flex-col flex-[3] rounded-xl gap-5">

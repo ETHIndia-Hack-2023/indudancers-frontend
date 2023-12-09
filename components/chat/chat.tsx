@@ -45,7 +45,7 @@ export default function Chat() {
 
   return (
     <div
-      className="chat-app h-[] w-full"
+      className="chat-app h-full w-full"
       // style={{ height: '', width: 'vw', overflow: 'hidden' }}
     >
       <Room nick={nick} messages={messages} commandHandler={onCommand} />
