@@ -1,19 +1,27 @@
 'use client'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { useContractWrite, useNetwork, usePrepareContractWrite, useSwitchNetwork } from 'wagmi';
+import { useContractWrite, useNetwork, usePrepareContractWrite, useSwitchNetwork, useWalletClient } from 'wagmi';
 import { GameContract } from '@/lib/contracts';
 import { parseAbi } from 'viem/abi';
-import { writeContract } from 'wagmi/actions';
+import { switchNetwork, writeContract } from 'wagmi/actions';
 import { Addresses } from '@/lib/addresses';
+import { stylusTestnet } from '@/lib/chains';
 
 type Props = {}
 
-export default function GameUpperSection({}: Props) {
+export default function GameUpperSection({ }: Props) {
   const [loading, setLoading] = useState(false);
+  const [chainId, setChainId] = useState(23011913);
+
   const network = useNetwork();
 
   const buyFloor = async () => {
+    if (network.chain?.id != chainId) {
+      await switchNetwork({
+        chainId
+      })
+    }
     setLoading(true);
 
     await writeContract({
@@ -25,7 +33,25 @@ export default function GameUpperSection({}: Props) {
     setLoading(false);
   }
 
+  const { data: walletClient, isError, isLoading } = useWalletClient();
+
   const buyDancer = async () => {
+    if (network.chain?.id != chainId) {
+
+      try {
+        await switchNetwork({
+          chainId
+        })
+      } catch {
+        await walletClient?.addChain({
+          chain: stylusTestnet
+        });
+        await switchNetwork({
+          chainId
+        })
+      }
+    }
+
     setLoading(true);
 
     await writeContract({

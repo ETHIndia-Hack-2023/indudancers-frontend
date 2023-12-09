@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { WagmiConfig, configureChains, createConfig, mainnet } from 'wagmi'
+import { WagmiConfig, configureChains, createConfig, mainnet, useWalletClient } from 'wagmi'
 import { createPublicClient, http } from 'viem'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -17,10 +17,7 @@ import { CONTENT_TOPIC } from '@/components/chat/config'
 import Nossr from '@/components/utils/nossr'
 import { stylusTestnet } from '@/lib/chains'
 
-// Set the Light Node options
 
-// Configure chains & providers with the Alchemy provider.
-// Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [stylusTestnet],
   [publicProvider()]
