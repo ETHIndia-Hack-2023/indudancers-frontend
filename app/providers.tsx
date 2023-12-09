@@ -15,14 +15,15 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { Protocols } from '@waku/sdk'
 import { CONTENT_TOPIC } from '@/components/chat/config'
 import Nossr from '@/components/utils/nossr'
+import { stylusTestnet } from '@/lib/chains'
 
 // Set the Light Node options
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet],
-  [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()]
+  [stylusTestnet],
+  [publicProvider()]
 )
 
 const config = createConfig({
