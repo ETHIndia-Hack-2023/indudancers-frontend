@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 
 type Props = {}
 
@@ -48,13 +49,15 @@ export default function GameUpperSection({}: Props) {
   const network = useNetwork()
   const account = useAccount()
 
-  const danceFloor = useContractRead({
-    ...GameContract,
-    address: Addresses.GameContract[network.chain?.id!]!,
-    functionName: 'getDanceFloor',
-    args: [account.address!, BigInt(0)],
-    watch: true,
-  })
+  //   const danceFloor = useContractRead({
+  //     ...GameContract,
+  //     address: Addresses.GameContract[network.chain?.id!]!,
+  //     functionName: 'getDanceFloor',
+  //     args: [account.address!, BigInt(0)],
+  //     watch: true,
+  //   })
+
+  const danceFloor = useDancerFloorRead()
 
   console.log('Dance floor', danceFloor)
 
@@ -117,34 +120,59 @@ export default function GameUpperSection({}: Props) {
     alert('new dancer')
   }
 
+  const getCoinsPerMinute = () => {
+    let sum = 0
+
+    for (let i = 0; i < danceFloor.floorData.dancers.length; i++) {
+      for (let j = 0; j < danceFloor.floorData.dancers[i].length; j++) {
+        if (danceFloor.floorData.dancers[i][j] == null) {
+          continue
+        }
+        sum += danceFloor.floorData.dancers[i][j]!.coins_per_minute
+      }
+    }
+    danceFloor.floorData.dancers
+    return sum
+  }
+
+  const someBalance = 1
+  const coinsPerMinute = getCoinsPerMinute()
+
   return (
-    <div className="flex justify-start gap-5">
-      <Button variant={'destructive'} onClick={buyFloor}>
-        Buy dance floor
-      </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant={'destructive'} onClick={() => {}}>
-            Buy dancer
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="max-h-[40vh] overflow-y-scroll">
-          <DropdownMenuLabel>Dancers marketplace</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {DANCERS_TO_BUY.map((data, key) => (
-            <>
-              <DropdownMenuItem>
-                <BuyDancerDropComponent
-                  key={key}
-                  onClick={buyNewDancer}
-                  toBuy={data}
-                />
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-            </>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <div className="flex justify-start gap-5 items-center">
+      <div className="flex font-bold text-white bg-accent-one_darker p-2 rounded-2xl">
+        <p>
+          Balance: {someBalance} (+ {coinsPerMinute} coins per minute)
+        </p>
+      </div>
+      <div className="flex justify-start gap-5">
+        <Button variant={'destructive'} onClick={buyFloor}>
+          Buy dance floor
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant={'destructive'} onClick={() => {}}>
+              Buy dancer
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="max-h-[40vh] overflow-y-scroll">
+            <DropdownMenuLabel>Dancers marketplace</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {DANCERS_TO_BUY.map((data, key) => (
+              <>
+                <DropdownMenuItem>
+                  <BuyDancerDropComponent
+                    key={key}
+                    onClick={buyNewDancer}
+                    toBuy={data}
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   )
 }
