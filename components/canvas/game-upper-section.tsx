@@ -14,7 +14,7 @@ import { GameContract } from '@/lib/contracts'
 import { parseAbi } from 'viem/abi'
 import { switchNetwork, writeContract } from 'wagmi/actions'
 import { Addresses } from '@/lib/addresses'
-import { stylusTestnet } from '@/lib/chains'
+import { SuppurtedChains, stylusTestnet } from '@/lib/chains'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,7 +46,6 @@ const DANCERS_TO_BUY: ToBuyType[] = [
 
 export default function GameUpperSection({}: Props) {
   const [loading, setLoading] = useState(false)
-  const [chainId, setChainId] = useState(23011913)
   const { data: walletClient, isError, isLoading } = useWalletClient()
   const network = useNetwork()
   const account = useAccount()
@@ -65,17 +64,17 @@ export default function GameUpperSection({}: Props) {
   console.log('Dance floor', danceFloor)
 
   const buyFloor = async () => {
-    if (network.chain?.id != chainId) {
+    if (!SuppurtedChains.find(c => c.id == network?.chain?.id)) {
       try {
         await switchNetwork({
-          chainId,
+          chainId: 23011913,
         })
       } catch {
         await walletClient?.addChain({
           chain: stylusTestnet,
         })
         await switchNetwork({
-          chainId,
+          chainId: 23011913,
         })
       }
     }
@@ -97,17 +96,17 @@ export default function GameUpperSection({}: Props) {
   }
 
   const buyDancer = async (level: bigint) => {
-    if (network.chain?.id != chainId) {
+    if (!SuppurtedChains.find(c => c.id == network?.chain?.id)) {
       try {
         await switchNetwork({
-          chainId,
+          chainId: 23011913,
         })
       } catch {
         await walletClient?.addChain({
           chain: stylusTestnet,
         })
         await switchNetwork({
-          chainId,
+          chainId: 23011913,
         })
       }
     }
