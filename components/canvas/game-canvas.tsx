@@ -12,6 +12,9 @@ import {
 } from '@pixi/react'
 import { useEffect, useMemo, useState } from 'react'
 
+PIXI.settings.RESOLUTION = window.devicePixelRatio
+PIXI.BaseTexture.defaultOptions.scaleMode = 0
+
 export default function GameCanvas() {
   const blurFilter = useMemo(() => new PIXI.BlurFilter(4), [])
 
@@ -70,8 +73,6 @@ const IndiDancer = () => {
   const alienImages = ['dance_1.png', 'dance_2.png']
   const textureArray: PIXI.Texture[] = []
 
-  //await PIXI.Assets.load(alienImages)
-
   for (let i = 0; i < 2; i++) {
     const texture = PIXI.Texture.from(alienImages[i])
     textureArray.push(texture)
@@ -81,31 +82,10 @@ const IndiDancer = () => {
 
   const [width, height] = [500, 500]
 
-  // const [frames, setFrames] = useState([])
-  // const [rot, setRot] = useState(0)
-  // const app = useApp()
-
-  // useTick((delta) => setRot((r) => r + 0.01 * delta))
-
-  // // load
-  // useEffect(() => {
-  //   app.loader.add(spritesheet).load((_, resource) => {
-  //     setFrames(
-  //       Object.keys(resource[spritesheet].data.frames).map((frame) =>
-  //         PIXI.Texture.from(frame)
-  //       )
-  //     )
-  //   })
-  // }, [])
-
-  // if (frames.length === 0) {
-  //   return null
-  // }
-
   return (
-    <Container x={width / 2} y={height / 2}>
+    <Container x={width} y={height} scale={10}>
       <AnimatedSprite
-        animationSpeed={0.5}
+        animationSpeed={0.1}
         isPlaying={true}
         textures={textureArray}
         anchor={0.5}
