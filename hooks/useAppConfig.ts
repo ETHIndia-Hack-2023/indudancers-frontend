@@ -1,5 +1,3 @@
-'use client'
-
 import { Address } from 'viem'
 
 type AppConfig = {

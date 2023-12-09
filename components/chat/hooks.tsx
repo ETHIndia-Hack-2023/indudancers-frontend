@@ -20,12 +20,15 @@ export const usePersistentNick = (): [
   string,
   React.Dispatch<React.SetStateAction<string>>
 ] => {
-  const [nick, setNick] = useState<string>(() => {
-    const persistedNick = window.localStorage.getItem('nick')
-    return persistedNick !== null ? persistedNick : generate()
-  })
+
+  const [nick, setNick] = useState<string>('')
+
   useEffect(() => {
-    localStorage.setItem('nick', nick)
+    const persistedNick = window.localStorage.getItem('nick')
+    setNick(persistedNick !== null ? persistedNick : generate())
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('nick', nick);
   }, [nick])
 
   return [nick, setNick]

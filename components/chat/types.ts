@@ -1,5 +1,3 @@
-'use client'
-
 import type { PeerId } from '@libp2p/interface-peer-id'
 import type { LightNode, StoreQueryOptions, Waku } from '@waku/interfaces'
 import type { Decoder } from '@waku/sdk'

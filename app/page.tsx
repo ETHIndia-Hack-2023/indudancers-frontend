@@ -8,10 +8,6 @@ import { DancerProvider } from '@/hooks/useDanceContext'
 import Image from 'next/image'
 
 export default function Home() {
-  if (typeof window == 'undefined') {
-    return <></>
-  }
-
   return (
     <main className="flex flex-col items-center min-h-screen max-h-screen gap-3">
       <Navbar></Navbar>
