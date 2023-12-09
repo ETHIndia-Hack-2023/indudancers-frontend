@@ -65,7 +65,7 @@ export default function Profile() {
         })
       } catch {
         await walletClient?.addChain({
-          chain: chains.find((chain) => chain.id == chainId)!,
+          chain: SuppurtedChains.find((chain) => chain.id == chainId)!,
         })
         await switchNetwork({
           chainId,
@@ -97,18 +97,19 @@ export default function Profile() {
               {/* <GearIcon />
               <p className="ml-5">Switch Network</p> */}
 
-              <Select>
+              <Select onValueChange={(value: string) => {
+                          changeNetwork(parseInt(value))
+                        }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Network" />
                 </SelectTrigger>
                 <SelectContent>
                   <>
-                    {SuppurtedChains.map((chain) => (
+                    {SuppurtedChains.map((chain, i) => (
                       <SelectItem
+                        key={i}
                         value={`${chain.id}`}
-                        onSelect={() => {
-                          changeNetwork(chain.id)
-                        }}
+                        
                       >
                         {chain.name}
                       </SelectItem>

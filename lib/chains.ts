@@ -1,4 +1,5 @@
 import { defineChain } from 'viem'
+import { scrollSepolia } from 'viem/chains'
 
 export const stylusTestnet = defineChain({
     id: 23011913,
@@ -12,11 +13,11 @@ export const stylusTestnet = defineChain({
     rpcUrls: {
       default: {
         http: ['https://stylus-testnet.arbitrum.io/rpc'],
-        webSocket: ['wss://stylus-testnet.arbitrum.io/feed'],
+        // webSocket: ['wss://stylus-testnet.arbitrum.io/feed'],
       },
       public: {
         http: ['https://stylus-testnet.arbitrum.io/rpc'],
-        webSocket: ['wss://stylus-testnet.arbitrum.io/feed'],
+        // webSocket: ['wss://stylus-testnet.arbitrum.io/feed'],
       },
     },
     blockExplorers: {
@@ -27,4 +28,5 @@ export const stylusTestnet = defineChain({
 
 export const SuppurtedChains = [
     stylusTestnet,
+    scrollSepolia
 ]

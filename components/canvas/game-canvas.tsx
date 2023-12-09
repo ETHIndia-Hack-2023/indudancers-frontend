@@ -23,6 +23,12 @@ export type GameCanvasProps = {
   danceFloor: DanceFloorData
 }
 
+const danceImages = [
+  'https://gateway.lighthouse.storage/ipfs/QmcFAWmNvakmtadqqPNAojfy2aLQHYTnfUwLCNBiWoWBsm',
+  'https://gateway.lighthouse.storage/ipfs/QmZQd2pYtztQQ2FFegDxzu8XDTbXm8XAoJHWYccSrpGoiq',
+]
+const textureArray: PIXI.Texture[] = []
+
 export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   const startingPoint = { x: 250, y: 200 }
   const minRnd = -10
@@ -65,12 +71,18 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   console.log(danceFloor)
 
   return (
-    <Stage renderOnComponentChange>
+    <Stage>
       <Container x={startingPoint.x} y={startingPoint.y}>
         {dancerr}
       </Container>
     </Stage>
   )
+}
+
+for (let i = 0; i < 2; i++) {
+  console.log('LOADING FILE')
+  const texture = PIXI.Texture.from(danceImages[i])
+  textureArray.push(texture)
 }
 
 function getRndInteger(min: number, max: number) {
@@ -83,15 +95,15 @@ type HeroDancerProps = {
 }
 
 const DanceHero = ({ x, y }: HeroDancerProps) => {
-  const alienImages = ['dance_1.png', 'dance_2.png']
-  const textureArray: PIXI.Texture[] = []
+  // const alienImages = ['dance_1.png', 'dance_2.png']
+  // const textureArray: PIXI.Texture[] = []
 
-  for (let i = 0; i < 2; i++) {
-    const texture = new PIXI.Texture.from(alienImages[i])
-    textureArray.push(texture)
-  }
+  // for (let i = 0; i < 2; i++) {
+  //   const texture = PIXI.Texture.from(alienImages[i])
+  //   textureArray.push(texture)
+  // }
 
-  console.log(textureArray)
+  // console.log(textureArray)
 
   return (
     <Container x={x} y={y} scale={10}>

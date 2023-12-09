@@ -1,8 +1,11 @@
+'use client'
+
 import GameCanvas from '@/components/canvas/game-canvas'
 import GameCanvasWrapper from '@/components/canvas/game-canvas-wrapper'
 import GameUpperSection from '@/components/canvas/game-upper-section'
 import Chat from '@/components/chat/chat'
 import Navbar from '@/components/structure/navbar'
+import { Toaster } from '@/components/ui/toaster'
 import { DancerProvider } from '@/hooks/useDanceContext'
 import Image from 'next/image'
 
@@ -25,6 +28,7 @@ export default function Home() {
           <Chat />
         </div>
       </div>
+      <Toaster />
     </main>
   )
 }
