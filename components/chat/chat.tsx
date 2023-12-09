@@ -1,44 +1,54 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import ChatMessages from './chat-messages'
-import SendMessageButton from './send-btn'
-import { Input } from '../ui/input'
+import handleCommand from './command'
+import Room from './Room'
+import { Message } from './Message'
+import { PageDirection, LightNode } from '@waku/interfaces'
 
-type Props = {}
+import { useWaku, useContentPair } from '@waku/react'
 
-export default function Chat({}: Props) {
-  const inputRef = React.createRef<HTMLInputElement>()
-  const [sendState, setSendState] = useState(false)
+import { useMessages, usePersistentNick } from './hooks'
 
-  function onSendAction() {
-    alert('send message with: ' + inputRef.current?.value)
-    inputRef.current!.value = ''
-    setSendState(!sendState)
+const startTime = new Date()
+// Only retrieve a week of history
+startTime.setTime(Date.now() - 1000 * 60 * 60 * 24 * 7)
+const endTime = new Date()
+
+export default function Chat() {
+  const { node } = useWaku<LightNode>()
+  const { decoder } = useContentPair()
+  const [messages, pushLocalMessages] = useMessages({
+    node,
+    decoder,
+    options: {
+      pageSize: 5,
+      pageDirection: PageDirection.FORWARD,
+      timeFilter: {
+        startTime,
+        endTime,
+      },
+    },
+  })
+
+  const [nick, setNick] = usePersistentNick()
+
+  const onCommand = (text: string): void => {
+    handleCommand(text, node, setNick).then(({ command, response }) => {
+      const commandMessages = response.map((msg) => {
+        return Message.fromUtf8String(command, msg)
+      })
+      pushLocalMessages(commandMessages)
+    })
   }
 
+  console.log('CHAT RENDER')
+
   return (
-    <div className="flex flex-col flex-1 max-h-full bg-cyan-400 rounded-2xl">
-      <div>Chat</div>
-      <div className="flex-1 m-5 overflow-scroll">
-        <ChatMessages></ChatMessages>
-      </div>
-      <div className="flex gap-5">
-        <Input
-          ref={inputRef}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              onSendAction()
-            }
-          }}
-        ></Input>
-        <div className="">
-          <SendMessageButton
-            onClick={onSendAction}
-            message="saasdsad"
-          ></SendMessageButton>
-        </div>
-      </div>
+    <div
+      className="chat-app"
+      style={{ height: '80vh', width: 'vw', overflow: 'hidden' }}
+    >
+      <Room nick={nick} messages={messages} commandHandler={onCommand} />
     </div>
   )
 }

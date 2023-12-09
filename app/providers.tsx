@@ -6,11 +6,17 @@ import { WagmiConfig, configureChains, createConfig, mainnet } from 'wagmi'
 import { createPublicClient, http } from 'viem'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import { ContentPairProvider, LightNodeProvider } from '@waku/react'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { Protocols } from '@waku/sdk'
+import { CONTENT_TOPIC } from '@/components/chat/config'
+import Nossr from '@/components/utils/nossr'
+
+// Set the Light Node options
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
@@ -33,7 +39,16 @@ type Props = {
 export default function Providers({ children }: Props) {
   return (
     <div>
-      <WagmiConfig config={config}>{children}</WagmiConfig>
+      <LightNodeProvider
+        options={{ defaultBootstrap: true }}
+        protocols={[Protocols.Store, Protocols.Filter, Protocols.LightPush]}
+      >
+        <ContentPairProvider contentTopic={CONTENT_TOPIC}>
+          <WagmiConfig config={config}>
+            <Nossr>{children}</Nossr>
+          </WagmiConfig>
+        </ContentPairProvider>
+      </LightNodeProvider>
     </div>
   )
 }
