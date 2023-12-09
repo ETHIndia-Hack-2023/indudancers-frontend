@@ -9,34 +9,6 @@ import { Addresses } from '@/lib/addresses';
 
 type Props = {}
 
-export const CONTACTS_STORE_ABI = [
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auditor',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'bytes32[]',
-        name: 'socialNetwork',
-        type: 'bytes32[]',
-      },
-      {
-        indexed: false,
-        internalType: 'bytes32[]',
-        name: 'contact',
-        type: 'bytes32[]',
-      },
-    ],
-    name: 'ContactsSet',
-    type: 'event',
-  },
-]
-
 export default function GameUpperSection({}: Props) {
   const [loading, setLoading] = useState(false);
   const network = useNetwork();
