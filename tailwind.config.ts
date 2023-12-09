@@ -41,6 +41,7 @@ module.exports = {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           one: 'hsl(var(--accent-one))',
+          one_darker: 'hsl(var(--accent-one-darker))',
           two: 'hsl(var(--accent-two))',
           foreground: 'hsl(var(--accent-foreground))',
         },

@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <div className="pr-[10%] pl-[10%]">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   )
