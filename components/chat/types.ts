@@ -37,4 +37,5 @@ export interface RoomProps {
   messages: OrderedSet<Message>
   commandHandler: (cmd: string) => void
   nick: string
+  address: string
 }

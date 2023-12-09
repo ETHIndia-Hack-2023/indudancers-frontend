@@ -17,6 +17,7 @@ export class ChatMessage {
   static fromUtf8String(
     timestamp: Date,
     nick: string,
+    address: string,
     text: string
   ): ChatMessage {
     const timestampNumber = BigInt(Math.floor(timestamp.valueOf() / 1000))
@@ -24,8 +25,9 @@ export class ChatMessage {
 
     return new ChatMessage({
       timestamp: timestampNumber,
-      nick,
-      payload,
+      nick: nick,
+      address: address,
+      payload: payload,
     })
   }
 
@@ -52,6 +54,10 @@ export class ChatMessage {
 
   get nick(): string {
     return this.proto.nick
+  }
+
+  get userAddress(): string {
+    return this.proto.address
   }
 
   get payloadAsUtf8(): string {

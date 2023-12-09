@@ -61,8 +61,11 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
     )
   })
 
+  console.log('RENDEING THE STAGE!!!!!!!!!!')
+  console.log(danceFloor)
+
   return (
-    <Stage>
+    <Stage renderOnComponentChange>
       <Container x={startingPoint.x} y={startingPoint.y}>
         {dancerr}
       </Container>
@@ -84,9 +87,11 @@ const DanceHero = ({ x, y }: HeroDancerProps) => {
   const textureArray: PIXI.Texture[] = []
 
   for (let i = 0; i < 2; i++) {
-    const texture = PIXI.Texture.from(alienImages[i])
+    const texture = new PIXI.Texture.from(alienImages[i])
     textureArray.push(texture)
   }
+
+  console.log(textureArray)
 
   return (
     <Container x={x} y={y} scale={10}>

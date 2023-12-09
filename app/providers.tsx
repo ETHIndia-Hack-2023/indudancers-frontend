@@ -2,7 +2,13 @@
 
 import React from 'react'
 
-import { WagmiConfig, configureChains, createConfig, mainnet, useWalletClient } from 'wagmi'
+import {
+  WagmiConfig,
+  configureChains,
+  createConfig,
+  mainnet,
+  useWalletClient,
+} from 'wagmi'
 import { createPublicClient, http } from 'viem'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -16,7 +22,6 @@ import { Protocols } from '@waku/sdk'
 import { CONTENT_TOPIC } from '@/components/chat/config'
 import Nossr from '@/components/utils/nossr'
 import { SuppurtedChains } from '@/lib/chains'
-
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   SuppurtedChains,

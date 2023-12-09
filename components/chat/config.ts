@@ -1,1 +1,1 @@
-export const CONTENT_TOPIC = '/t4/proto'
+export const CONTENT_TOPIC = '/t5/proto'

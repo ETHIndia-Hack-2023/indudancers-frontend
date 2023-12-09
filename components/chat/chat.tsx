@@ -8,6 +8,7 @@ import { PageDirection, LightNode } from '@waku/interfaces'
 import { useWaku, useContentPair } from '@waku/react'
 
 import { useMessages, usePersistentNick } from './hooks'
+import { useAccount, useConnect } from 'wagmi'
 
 const startTime = new Date()
 // Only retrieve a week of history
@@ -30,25 +31,26 @@ export default function Chat() {
     },
   })
 
+  const { address, connector, isConnected } = useAccount()
   const [nick, setNick] = usePersistentNick()
 
   const onCommand = (text: string): void => {
     handleCommand(text, node, setNick).then(({ command, response }) => {
       const commandMessages = response.map((msg) => {
-        return Message.fromUtf8String(command, msg)
+        return Message.fromUtf8String(command, msg, address as string)
       })
       pushLocalMessages(commandMessages)
     })
   }
 
-  console.log('CHAT RENDER')
-
   return (
-    <div
-      className="chat-app h-full w-full"
-      // style={{ height: '', width: 'vw', overflow: 'hidden' }}
-    >
-      <Room nick={nick} messages={messages} commandHandler={onCommand} />
+    <div className="chat-app h-full w-full">
+      <Room
+        nick={nick}
+        address={address as string}
+        messages={messages}
+        commandHandler={onCommand}
+      />
     </div>
   )
 }

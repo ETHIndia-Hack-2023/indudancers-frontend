@@ -33,6 +33,7 @@ export default function Room(props: RoomProps) {
       const chatMessage = ChatMessage.fromUtf8String(
         timestamp,
         props.nick,
+        props.address,
         text
       )
       const payload = chatMessage.encode()
@@ -45,8 +46,6 @@ export default function Room(props: RoomProps) {
   const lightPushPeersLength = orZero(lightPushPeers?.length)
   // const filterPeersLength = orZero(filterPeers?.length)
   // const storePeersLength = orZero(storePeers?.length)
-
-  console.log('AAAA')
 
   return (
     <div className="flex flex-col h-full bg-accent-one_darker rounded-3xl">

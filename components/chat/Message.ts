@@ -37,9 +37,12 @@ export class Message {
     return
   }
 
-  static fromUtf8String(nick: string, text: string): Message {
+  static fromUtf8String(nick: string, text: string, address: string): Message {
     const now = new Date()
-    return new Message(ChatMessage.fromUtf8String(now, nick, text), now)
+    return new Message(
+      ChatMessage.fromUtf8String(now, nick, address, text),
+      now
+    )
   }
 
   get nick() {
@@ -52,5 +55,9 @@ export class Message {
 
   get payloadAsUtf8() {
     return this.chatMessage.payloadAsUtf8
+  }
+
+  get address() {
+    return this.chatMessage.userAddress
   }
 }

@@ -5,18 +5,25 @@ import { GameContract } from '@/lib/contracts'
 import { DanceFloorData } from '@/types/game-types'
 import { useAccount, useContractRead, useNetwork, useWalletClient } from 'wagmi'
 
-export default function useDacnerFloorRead(): {
+export default function useDancerFloorRead(address: string | null = null): {
   isLoading: boolean
   floorData: DanceFloorData
 } {
   const account = useAccount()
   const network = useNetwork()
 
+  console.log('Is ADDR NULL???')
+  console.log(address == null)
+
+  const addr = address == null ? account.address! : address
+
+  console.log('ADDRESS IS: ' + addr)
+
   const data = useContractRead({
     ...GameContract,
     address: Addresses.GameContract[network.chain?.id!]!,
     functionName: 'getDanceFloor',
-    args: [account.address!, BigInt(0)],
+    args: [addr, BigInt(0)],
     watch: true,
   })
 

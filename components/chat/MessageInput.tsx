@@ -43,11 +43,8 @@ export default function MessageInput(props: MessageInputProps) {
     }
   }
 
-  console.log('msg INPUT')
-
   // Enable the button if there are peers available or the user is sending a command
   useEffect(() => {
-    console.log('msg INPUT USE EFFECT')
     if (inputText.startsWith('/') || hasLightPushPeers) {
       setActiveButton(true)
     } else if (node) {

@@ -5,17 +5,10 @@ import { Message } from './Message'
 import type { ChatListProps } from './types'
 import Loader from '../ui/loaders/loader'
 import { useAccount, useWalletClient } from 'wagmi'
+import Link from 'next/link'
 
 export default function ChatList(props: ChatListProps) {
   const { address, connector, isConnected } = useAccount()
-
-  if (!isConnected) {
-    return (
-      <div className="flex flex-1 flex-col items-center justify-center">
-        <h1>Please, log in to use the chat</h1>
-      </div>
-    )
-  }
 
   const renderedMessages = props.messages.array.map((message) => (
     <div
@@ -27,13 +20,13 @@ export default function ChatList(props: ChatListProps) {
       }
       className="flex flex-col p-2 border-b border-gray-200"
     >
-      <span className="text-sm text-white">{message.nick}</span>
+      <span className="text-sm text-white">
+        <a href={`/users/${message.address}`}>{message.nick}</a>
+      </span>
       <span className="text-sm text-white">{formatDisplayDate(message)}</span>
       <p className="text-white">{message.payloadAsUtf8}</p>
     </div>
   ))
-
-  console.log('Chat list!!!')
 
   if (props.isLoading) {
     return (
@@ -47,6 +40,7 @@ export default function ChatList(props: ChatListProps) {
     <div className="overflow-y-scroll flex-1 h-full items-start max-h-[70vh] min-h-[70vh] ">
       {renderedMessages}
       <AlwaysScrollToBottom messages={props.messages.array} />
+      {!isConnected ? <h1>Please, login to use the chat</h1> : <></>}
     </div>
   )
 }
@@ -65,7 +59,6 @@ const AlwaysScrollToBottom = (props: { messages: Message[] }) => {
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log('BBBB USE EFFECT')
     if (elementRef.current) {
       elementRef.current.scrollIntoView()
     }
