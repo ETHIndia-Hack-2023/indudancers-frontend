@@ -1,5 +1,3 @@
-'use client'
-
 import type { Peer } from '@libp2p/interface-peer-store'
 import type { IFilter, ILightPush, IStore } from '@waku/interfaces'
 

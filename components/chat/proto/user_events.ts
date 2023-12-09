@@ -1,5 +1,3 @@
-'use client'
-
 //@ts-nocheck
 
 import { encodeMessage, decodeMessage, message } from 'protons-runtime'

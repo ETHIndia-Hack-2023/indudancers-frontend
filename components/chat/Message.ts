@@ -1,5 +1,3 @@
-'use client'
-
 import { IDecodedMessage } from '@waku/interfaces'
 import { ChatMessage } from './chat_message'
 

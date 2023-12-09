@@ -1,5 +1,3 @@
-'use client'
-
 export class OrderedSet<T> {
   array: Array<T>
 
