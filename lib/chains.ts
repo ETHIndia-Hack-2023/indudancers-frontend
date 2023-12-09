@@ -12,11 +12,11 @@ export const stylusTestnet = defineChain({
     rpcUrls: {
       default: {
         http: ['https://stylus-testnet.arbitrum.io/rpc'],
-        webSocket: ['wss://stylus-sepolia.arbitrum.io/feed'],
+        // webSocket: ['ws/s://stylus-sepolia.arbitrum.io/feed'],
       },
       public: {
         http: ['https://stylus-testnet.arbitrum.io/rpc'],
-        webSocket: ['wss://stylus-sepolia.arbitrum.io/feed'],
+        // webSocket: ['wss://stylus-sepolia.arbitrum.io/feed'],
       },
     },
     blockExplorers: {
