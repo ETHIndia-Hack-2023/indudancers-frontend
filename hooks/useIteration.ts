@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useEffect } from 'react'
 
+//@ts-nocheck
 export const useIteration = (incr = 0.1) => {
   const [i, setI] = React.useState(0)
 

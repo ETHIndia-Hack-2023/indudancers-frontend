@@ -1,3 +1,5 @@
+'use client'
+
 import { utf8ToBytes, bytesToUtf8 } from '@waku/sdk'
 import * as proto from './proto/chat_message'
 

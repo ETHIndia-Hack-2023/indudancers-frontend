@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { useWaku } from '@waku/react'
 import { LightNode } from '@waku/interfaces'

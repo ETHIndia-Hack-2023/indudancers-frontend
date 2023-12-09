@@ -8,7 +8,6 @@ import {
   createConfig,
   mainnet,
   useWalletClient,
-  
 } from 'wagmi'
 import { createPublicClient, http } from 'viem'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -48,9 +47,7 @@ export default function Providers({ children }: Props) {
         protocols={[Protocols.Store, Protocols.Filter, Protocols.LightPush]}
       >
         <ContentPairProvider contentTopic={CONTENT_TOPIC}>
-          <WagmiConfig config={config}>
-            <Nossr>{children}</Nossr>
-          </WagmiConfig>
+          <WagmiConfig config={config}>{children}</WagmiConfig>
         </ContentPairProvider>
       </LightNodeProvider>
     </div>
