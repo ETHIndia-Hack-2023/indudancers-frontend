@@ -24,6 +24,7 @@ export type UseMessagesParams = {
 export type UseMessagesResult = [OrderedSet<Message>, (v: Message[]) => void]
 
 export interface ChatListProps {
+  isLoading: boolean
   messages: OrderedSet<Message>
 }
 

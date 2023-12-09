@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message BattleInitMessage {
+  uint64 timestamp = 1;
+  string initiator = 2;
+}
+
+message BattleInitMessage {
+  uint64 timestamp = 1;
+  string initiator
+  string nick = 2;
+}

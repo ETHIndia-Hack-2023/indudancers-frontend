@@ -2,6 +2,9 @@ import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { useWaku } from '@waku/react'
 import { LightNode } from '@waku/interfaces'
 import { MessageInputProps } from './types'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { PaperPlaneIcon } from '@radix-ui/react-icons'
 
 export default function MessageInput(props: MessageInputProps) {
   const { hasLightPushPeers } = props
@@ -51,8 +54,8 @@ export default function MessageInput(props: MessageInputProps) {
   }, [node, inputText, hasLightPushPeers])
 
   return (
-    <div className="flex p-2">
-      <input
+    <div className="flex p-2 gap-3">
+      <Input
         type="text"
         value={inputText}
         onChange={onChange}
@@ -60,15 +63,15 @@ export default function MessageInput(props: MessageInputProps) {
         className="flex-grow p-2 border border-gray-300 rounded-l-md"
         placeholder="Type your message..."
       />
-      <button
+      <Button
         onClick={onMessage}
         className={`flex-none px-4 py-2 text-white ${
           isActive ? 'bg-blue-500' : 'bg-blue-300 cursor-not-allowed'
         } rounded-r-md`}
         disabled={!isActive}
       >
-        Send
-      </button>
+        <PaperPlaneIcon />
+      </Button>
     </div>
   )
 }

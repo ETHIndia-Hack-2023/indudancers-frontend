@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { Message } from './Message'
 import type { ChatListProps } from './types'
+import Loader from '../ui/loaders/loader'
 
 export default function ChatList(props: ChatListProps) {
   const renderedMessages = props.messages.array.map((message) => (
@@ -23,8 +24,12 @@ export default function ChatList(props: ChatListProps) {
 
   console.log('Chat list!!!')
 
+  if (props.isLoading) {
+    return <Loader />
+  }
+
   return (
-    <div className="h- overflow-y-auto">
+    <div className="overflow-y-scroll h-full">
       {renderedMessages}
       <AlwaysScrollToBottom messages={props.messages.array} />
     </div>
@@ -43,8 +48,6 @@ function formatDisplayDate(message: Message): string {
 
 const AlwaysScrollToBottom = (props: { messages: Message[] }) => {
   const elementRef = useRef<HTMLDivElement>(null)
-
-  console.log('BBB')
 
   useEffect(() => {
     console.log('BBBB USE EFFECT')
