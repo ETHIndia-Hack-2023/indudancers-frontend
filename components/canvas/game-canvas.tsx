@@ -16,9 +16,6 @@ import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { DanceFloorData, hasOnCell } from '@/types/game-types'
 import { useIteration } from '@/hooks/useIteration'
 
-// PIXI.Assets.loader.load('dance_1.png', "{% static 'dance_1.png' %}")
-// PIXI.Assets.loader.load('dance_1.png', "{% static 'dance_1.png' %}")
-
 PIXI.settings.RESOLUTION = window.devicePixelRatio
 PIXI.BaseTexture.defaultOptions.scaleMode = 0
 
@@ -26,9 +23,9 @@ export type GameCanvasProps = {
   danceFloor: DanceFloorData
 }
 
-const alienImages = [
-  'https://raw.githubusercontent.com/ETHIndia-Hack-2023/indudancers-frontend/main/public/dance_1.png',
-  'https://raw.githubusercontent.com/ETHIndia-Hack-2023/indudancers-frontend/main/public/dance_2.png',
+const danceImages = [
+  'https://gateway.lighthouse.storage/ipfs/QmcFAWmNvakmtadqqPNAojfy2aLQHYTnfUwLCNBiWoWBsm',
+  'https://gateway.lighthouse.storage/ipfs/QmZQd2pYtztQQ2FFegDxzu8XDTbXm8XAoJHWYccSrpGoiq',
 ]
 const textureArray: PIXI.Texture[] = []
 
@@ -83,7 +80,8 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
 }
 
 for (let i = 0; i < 2; i++) {
-  const texture = PIXI.Texture.from(alienImages[i])
+  console.log('LOADING FILE')
+  const texture = PIXI.Texture.from(danceImages[i])
   textureArray.push(texture)
 }
 
