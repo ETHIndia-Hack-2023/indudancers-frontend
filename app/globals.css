@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 245, 35%, 33% */
+
 @layer base {
   :root {
-    --background: 266, 30%, 26%;
+    --background: 245, 35%, 33%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -19,8 +21,8 @@
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --accent-one: 34, 90%, 61%;
-    --accent-one-darker: 34, 63%, 45%;
+    --accent-one: 45, 51%, 70%;
+    --accent-one-darker: 35, 56%, 51%;
     --accent-two: 21, 89%, 52%;
 
     --muted: 210 40% 96.1%;

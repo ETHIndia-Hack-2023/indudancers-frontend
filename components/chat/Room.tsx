@@ -49,7 +49,7 @@ export default function Room(props: RoomProps) {
   console.log('AAAA')
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <div className="flex justify-between items-center bg-gray-800 text-white p-4">
         <div>Room</div>
       </div>
