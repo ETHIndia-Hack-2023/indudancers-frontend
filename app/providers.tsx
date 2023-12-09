@@ -15,11 +15,11 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { Protocols } from '@waku/sdk'
 import { CONTENT_TOPIC } from '@/components/chat/config'
 import Nossr from '@/components/utils/nossr'
-import { stylusTestnet } from '@/lib/chains'
+import { SuppurtedChains } from '@/lib/chains'
 
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [stylusTestnet],
+  SuppurtedChains,
   [publicProvider()]
 )
 

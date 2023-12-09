@@ -22,11 +22,10 @@ export const stylusTestnet = defineChain({
     blockExplorers: {
       default: { name: 'Explorer', url: 'https://stylus-testnet-explorer.arbitrum.io/' },
     },
-    contracts: {
-      multicall3: {
-        address: '0x42aaE78422EF3e8E6d0D88e58E25CA7C7Ecb9D5a',
-        blockCreated: 5882,
-      },
-    },
+    contracts: {},
   })
+
+export const SuppurtedChains = [
+    stylusTestnet,
+]
   

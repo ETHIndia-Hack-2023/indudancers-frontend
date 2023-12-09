@@ -8,6 +8,7 @@ import {
   useEnsName,
   useNetwork,
   useSwitchNetwork,
+  useWalletClient,
 } from 'wagmi'
 import {
   DropdownMenu,
@@ -40,6 +41,9 @@ import {
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { switchNetwork } from 'wagmi/actions'
+import { useState } from 'react'
+import { SuppurtedChains } from '@/lib/chains'
 
 export default function Profile() {
   const { address, isConnected } = useAccount()
@@ -49,26 +53,26 @@ export default function Profile() {
   const { data: ensName } = useEnsName({ address })
   const { data: ensAvatar } = useEnsAvatar({ name: ensName })
   const { disconnect } = useDisconnect()
-  const { chain, chains: chains22 } = useNetwork()
+  const { chain, chains } = useNetwork()
+  const [error, setError] = useState('');
+  const { data: walletClient, isError, isLoading } = useWalletClient();
 
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork()
-
-  const { switchNetwork: switchScrollNetwork } = useSwitchNetwork({
-    chainId: 534351,
-  })
-
-  const { switchNetwork: switchStylusNetwork } = useSwitchNetwork({
-    chainId: 69,
-  })
-
-  const { switchNetwork: switchArbitrumNetwork } = useSwitchNetwork({
-    chainId: 69,
-  })
-
-  const { switchNetwork: swtichZetChain } = useSwitchNetwork({
-    chainId: 69,
-  })
+  const changeNetwork = async (chainId: number) => {
+    if (chain?.id != chainId) {
+      try {
+        await switchNetwork({
+          chainId
+        })
+      } catch {
+        await walletClient?.addChain({
+          chain: chains.find(chain => chain.id == chainId)!
+        });
+        await switchNetwork({
+          chainId
+        })
+      }
+    }
+  }
 
   if (isConnected)
     return (
@@ -98,47 +102,29 @@ export default function Profile() {
                   <SelectValue placeholder="Network" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem
-                    value="stylus"
-                    onSelect={() => switchStylusNetwork?.()}
-                  >
-                    Arbitrum Stylus
-                  </SelectItem>
-                  <SelectItem
-                    value="scroll"
+                  <>
+                  {SuppurtedChains.map(chain => {
+                    <SelectItem
+                    value={`${chain.id}`}
                     onSelect={() => {
-                      switchScrollNetwork?.()
-                      console.log('switch scroll')
+                      changeNetwork(chain.id)
                     }}
                   >
-                    Scroll zkEVM
+                    {chain.name}
                   </SelectItem>
-                  <SelectItem
-                    value="arbitrum"
-                    onSelect={() => {
-                      switchArbitrumNetwork?.()
-                      console.log('switch arbitrum')
-                    }}
-                  >
-                    Arbitrum Mainnet
-                  </SelectItem>
-                  <SelectItem
-                    value="zetchain"
-                    onSelect={() => swtichZetChain?.()}
-                  >
-                    Zetchain
-                  </SelectItem>
+                  })}
+                  </>
                 </SelectContent>
               </Select>
 
-              <div>{error && error.message}</div>
+              <div>{error}</div>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col">
               <>
                 {chain && <div>Connected to {chain.name}</div>}
                 {chains && (
                   <div>
-                    Available chains: {chains.map((chain) => chain.name)}
+                    Available chains: {SuppurtedChains.map((chain) => chain.name)}
                   </div>
                 )}
               </>
