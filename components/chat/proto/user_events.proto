@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message UserMusicEvent {
+    string address = 1;
+    string musicLink = 2;
+    string timestamp = 3;
+    string musicOffset = 4;
+}
