@@ -103,8 +103,8 @@ export default function Profile() {
                 </SelectTrigger>
                 <SelectContent>
                   <>
-                    {SuppurtedChains.map((chain) => {
-                      ;<SelectItem
+                    {SuppurtedChains.map((chain) => (
+                      <SelectItem
                         value={`${chain.id}`}
                         onSelect={() => {
                           changeNetwork(chain.id)
@@ -112,7 +112,7 @@ export default function Profile() {
                       >
                         {chain.name}
                       </SelectItem>
-                    })}
+                    ))}
                   </>
                 </SelectContent>
               </Select>
