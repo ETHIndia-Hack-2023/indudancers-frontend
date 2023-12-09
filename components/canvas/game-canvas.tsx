@@ -16,8 +16,7 @@ import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { DanceFloorData, hasOnCell } from '@/types/game-types'
 import { useIteration } from '@/hooks/useIteration'
 
-PIXI.settings.RESOLUTION = window.devicePixelRatio
-PIXI.BaseTexture.defaultOptions.scaleMode = 0
+
 
 export type GameCanvasProps = {
   danceFloor: DanceFloorData
@@ -30,6 +29,16 @@ const danceImages = [
 const textureArray: PIXI.Texture[] = []
 
 export default function GameCanvas({ danceFloor }: GameCanvasProps) {
+  useEffect(() => {
+    PIXI.settings.RESOLUTION = window.devicePixelRatio
+    PIXI.BaseTexture.defaultOptions.scaleMode = 0
+    for (let i = 0; i < 2; i++) {
+      console.log('LOADING FILE')
+      const texture = PIXI.Texture.from(danceImages[i])
+      textureArray.push(texture)
+    }
+    
+  }, [])
   const startingPoint = { x: 250, y: 200 }
   const minRnd = -10
   const maxRnd = 10
@@ -79,11 +88,6 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   )
 }
 
-for (let i = 0; i < 2; i++) {
-  console.log('LOADING FILE')
-  const texture = PIXI.Texture.from(danceImages[i])
-  textureArray.push(texture)
-}
 
 function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min
