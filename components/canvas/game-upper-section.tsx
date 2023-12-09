@@ -25,6 +25,7 @@ import {
 } from '../ui/dropdown-menu'
 import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { useToast } from '../ui/use-toast'
+import { formatEther } from 'viem'
 
 type Props = {}
 
@@ -36,11 +37,11 @@ type ToBuyType = {
 
 // Level - coins_per_minute - price
 const DANCERS_TO_BUY: ToBuyType[] = [
-  { lvl: 1, coin_per_minute: 2, price: 5 },
-  { lvl: 2, coin_per_minute: 5, price: 15 },
-  { lvl: 3, coin_per_minute: 10, price: 25 },
-  { lvl: 4, coin_per_minute: 100, price: 200 },
-  { lvl: 5, coin_per_minute: 5000, price: 10000 },
+  { lvl: 1, coin_per_minute: 1, price: 10 },
+  { lvl: 2, coin_per_minute: 5, price: 600 },
+  { lvl: 3, coin_per_minute: 7, price: 9000 },
+  { lvl: 4, coin_per_minute: 20, price: 19000 },
+  { lvl: 5, coin_per_minute: 30, price: 30000 },
 ]
 
 export default function GameUpperSection({}: Props) {
@@ -88,9 +89,14 @@ export default function GameUpperSection({}: Props) {
     })
 
     setLoading(false)
+    toast({
+      title: 'New fance floor was bought!',
+      description: 'You bought new dance floor',
+    })
+
   }
 
-  const buyDancer = async () => {
+  const buyDancer = async (level: bigint) => {
     if (network.chain?.id != chainId) {
       try {
         await switchNetwork({
@@ -112,18 +118,20 @@ export default function GameUpperSection({}: Props) {
       ...GameContract,
       address: Addresses.GameContract[network.chain?.id!]!,
       functionName: 'buyDancer',
-      args: [BigInt(1)],
+      args: [level],
     })
 
     setLoading(false)
-  }
 
-  const buyNewDancer = (info: ToBuyType) => {
     toast({
       title: 'The new dancer was bought!',
-      description: 'You boutght new dancer',
+      description: 'You bought new dancer',
     })
-    alert('new dancer')
+  }
+
+  const buyNewDancer = async (info: ToBuyType) => {
+    
+    buyDancer(BigInt(info.lvl));
   }
 
   const getCoinsPerMinute = () => {
@@ -148,7 +156,7 @@ export default function GameUpperSection({}: Props) {
     <div className="flex justify-start gap-5 items-center">
       <div className="flex font-bold text-white outline-green-600 outline outline-4 p-2 rounded-2xl">
         <p>
-          Balance: {someBalance} (+ {coinsPerMinute} coins per minute)
+          Balance: {formatEther(danceFloor.claimable)} (+ {formatEther(danceFloor.tokens_per_minute)} coins per second)
         </p>
       </div>
       <div className="flex justify-start gap-5">

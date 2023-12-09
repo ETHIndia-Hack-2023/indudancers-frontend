@@ -7,7 +7,10 @@ import { useAccount, useContractRead, useNetwork, useWalletClient } from 'wagmi'
 
 export default function useDancerFloorRead(address: string | null = null): {
   isLoading: boolean
-  floorData: DanceFloorData
+  floorData: DanceFloorData,
+  claimable: bigint,
+  tokens_per_minute: bigint,
+  errorSignature: `0x${string}` | undefined
 } {
   const account = useAccount()
   const network = useNetwork()
@@ -22,10 +25,14 @@ export default function useDancerFloorRead(address: string | null = null): {
   const data = useContractRead({
     ...GameContract,
     address: Addresses.GameContract[network.chain?.id!]!,
-    functionName: 'getDanceFloor',
-    args: [addr, BigInt(0)],
+    functionName: 'getGameData',
+    args: [addr as `0x${string}`],
     watch: true,
   })
+
+  console.log('Raw game data', data);
+
+  const errorSignature = (data.error?.cause as any)?.signature as `0x${string}` | undefined;
 
   const floorData: DanceFloorData = {
     dancers: [],
@@ -48,5 +55,11 @@ export default function useDancerFloorRead(address: string | null = null): {
     }
   }
 
-  return { isLoading: data.isLoading, floorData }
+  const claimable = data.data?.[9][0] || BigInt(0);
+  const tokens_per_minute = data.data?.[9][1] || BigInt(0);
+
+  console.log('Claimable', claimable);
+  console.log('TPM', tokens_per_minute);
+
+  return { isLoading: data.isLoading, floorData, claimable, tokens_per_minute, errorSignature }
 }

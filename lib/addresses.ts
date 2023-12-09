@@ -1,5 +1,5 @@
 export const Addresses = {
     GameContract: {
-        23011913: '0x38ae9AE7b947F7192301dcEaF5036FE6b6518dAB'
+        23011913: '0x19922541246971E795881266398B9D0830dE8823'
     } as Record<number, `0x${string}`>
 }
