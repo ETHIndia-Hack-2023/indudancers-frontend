@@ -49,8 +49,8 @@ export default function Room(props: RoomProps) {
   console.log('AAAA')
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex justify-between items-center bg-gray-800 text-white p-4">
+    <div className="flex flex-col h-full bg-accent-one_darker rounded-3xl">
+      <div className="flex justify-between items-center bg-accent-one rounded-3xl text-slate-900 p-4">
         <div>Global Chat</div>
       </div>
       <ChatList isLoading={!lightPushPeers} messages={props.messages} />

@@ -119,13 +119,16 @@ export default function GameUpperSection({}: Props) {
 
   return (
     <div className="flex justify-start gap-5">
-      <Button onClick={buyFloor}>Buy dance floor</Button>
-      <Button onClick={buyDancer}>Buy dancer</Button>
+      <Button variant={'destructive'} onClick={buyFloor}>
+        Buy dance floor
+      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button onClick={() => {}}>Buy dance floor</Button>
+          <Button variant={'destructive'} onClick={() => {}}>
+            Buy dancer
+          </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="max-h-[40vh] overflow-y-scroll">
           <DropdownMenuLabel>Dancers marketplace</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {DANCERS_TO_BUY.map((data, key) => (
@@ -154,7 +157,7 @@ type BuyDancerProps = {
 function BuyDancerDropComponent({ onClick, toBuy }: BuyDancerProps) {
   return (
     <div>
-      <div className="flex justify-between flex-col">
+      <div className="flex justify-between flex-col w-full">
         <p className="flex justify-between">
           <p>Level: </p>
           <p>{toBuy.lvl}</p>

@@ -5,11 +5,13 @@ import { MessageInputProps } from './types'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { PaperPlaneIcon } from '@radix-ui/react-icons'
+import { useAccount } from 'wagmi'
 
 export default function MessageInput(props: MessageInputProps) {
   const { hasLightPushPeers } = props
   const { node } = useWaku<LightNode>()
 
+  const { address, connector, isConnected } = useAccount()
   const [inputText, setInputText] = useState<string>('')
   const [isActive, setActiveButton] = useState<boolean>(false)
 
@@ -62,14 +64,14 @@ export default function MessageInput(props: MessageInputProps) {
         onKeyDown={onKeyDown}
         className="flex-grow p-2 border border-gray-300 rounded-l-md"
         placeholder="Type your message..."
-        disabled={!isActive}
+        disabled={!(isActive && isConnected)}
       />
       <Button
         onClick={onMessage}
         className={`flex-none px-4 py-2 text-white ${
           isActive ? 'bg-blue-500' : 'bg-blue-300 cursor-not-allowed'
         } rounded-r-md`}
-        disabled={!isActive}
+        disabled={!(isActive && isConnected)}
       >
         <PaperPlaneIcon />
       </Button>

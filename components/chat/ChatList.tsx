@@ -4,8 +4,19 @@ import { useEffect, useRef } from 'react'
 import { Message } from './Message'
 import type { ChatListProps } from './types'
 import Loader from '../ui/loaders/loader'
+import { useAccount, useWalletClient } from 'wagmi'
 
 export default function ChatList(props: ChatListProps) {
+  const { address, connector, isConnected } = useAccount()
+
+  if (!isConnected) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <h1>Please, log in to use the chat</h1>
+      </div>
+    )
+  }
+
   const renderedMessages = props.messages.array.map((message) => (
     <div
       key={
@@ -25,11 +36,15 @@ export default function ChatList(props: ChatListProps) {
   console.log('Chat list!!!')
 
   if (props.isLoading) {
-    return <Loader />
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <Loader />
+      </div>
+    )
   }
 
   return (
-    <div className="overflow-y-scroll flex-1 h-full items-start max-h-[70vh] min-h-[70vh]">
+    <div className="overflow-y-scroll flex-1 h-full items-start max-h-[70vh] min-h-[70vh] ">
       {renderedMessages}
       <AlwaysScrollToBottom messages={props.messages.array} />
     </div>
