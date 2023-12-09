@@ -1,3 +1,5 @@
+'use client'
+
 import type { LightNode } from '@waku/interfaces'
 import ChatList from './ChatList'
 import MessageInput from './MessageInput'

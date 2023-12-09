@@ -64,6 +64,7 @@ export const useMessages = (params: UseMessagesParams): UseMessagesResult => {
   return [allMessages, pushMessages]
 }
 
+//@ts-nocheck
 // can be safely ignored
 // this is for experiments on waku side around new discovery options
 export const useNodePeers = (node: undefined | LightNode) => {

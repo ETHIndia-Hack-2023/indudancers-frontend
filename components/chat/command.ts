@@ -1,3 +1,5 @@
+'use client'
+
 import { multiaddr } from '@multiformats/multiaddr'
 import type { LightNode } from '@waku/interfaces'
 

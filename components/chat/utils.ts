@@ -1,17 +1,19 @@
-import type { Peer } from "@libp2p/interface-peer-store";
-import type { IFilter, ILightPush, IStore } from "@waku/interfaces";
+'use client'
+
+import type { Peer } from '@libp2p/interface-peer-store'
+import type { IFilter, ILightPush, IStore } from '@waku/interfaces'
 
 export async function handleCatch(
   promise?: Promise<Peer[]>
 ): Promise<Peer[] | undefined> {
   if (!promise) {
-    return Promise.resolve(undefined);
+    return Promise.resolve(undefined)
   }
 
   try {
-    return await promise;
+    return await promise
   } catch (_) {
-    return undefined;
+    return undefined
   }
 }
 
@@ -23,5 +25,5 @@ export function getPeerIdsForProtocol(
     ? peers
         .filter((p) => p.protocols.includes(protocol.multicodec))
         .map((p) => p.id)
-    : [];
+    : []
 }

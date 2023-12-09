@@ -1,9 +1,15 @@
+'use client'
+
 import GameCanvasWrapper from '@/components/canvas/game-canvas-wrapper'
 import Chat from '@/components/chat/chat'
 import Navbar from '@/components/structure/navbar'
 import { DancerProvider } from '@/hooks/useDanceContext'
 
 export default function Home() {
+  if (typeof window == 'undefined') {
+    return <></>
+  }
+
   return (
     <main className="flex flex-col items-center min-h-screen max-h-screen gap-3">
       <Navbar></Navbar>
