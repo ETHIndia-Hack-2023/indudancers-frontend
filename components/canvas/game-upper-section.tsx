@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import useDancerFloorRead from '@/hooks/useDanceFloorRead'
+import { useToast } from '../ui/use-toast'
 
 type Props = {}
 
@@ -48,6 +49,7 @@ export default function GameUpperSection({}: Props) {
   const { data: walletClient, isError, isLoading } = useWalletClient()
   const network = useNetwork()
   const account = useAccount()
+  const { toast } = useToast()
 
   //   const danceFloor = useContractRead({
   //     ...GameContract,
@@ -117,6 +119,10 @@ export default function GameUpperSection({}: Props) {
   }
 
   const buyNewDancer = (info: ToBuyType) => {
+    toast({
+      title: 'The new dancer was bought!',
+      description: 'You boutght new dancer',
+    })
     alert('new dancer')
   }
 
@@ -140,7 +146,7 @@ export default function GameUpperSection({}: Props) {
 
   return (
     <div className="flex justify-start gap-5 items-center">
-      <div className="flex font-bold text-white bg-accent-one_darker p-2 rounded-2xl">
+      <div className="flex font-bold text-white outline-green-600 outline outline-4 p-2 rounded-2xl">
         <p>
           Balance: {someBalance} (+ {coinsPerMinute} coins per minute)
         </p>
