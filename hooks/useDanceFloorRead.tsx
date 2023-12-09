@@ -5,7 +5,10 @@ import { GameContract } from '@/lib/contracts'
 import { DanceFloorData } from '@/types/game-types'
 import { useAccount, useContractRead, useNetwork, useWalletClient } from 'wagmi'
 
-export default function useDacnerFloorRead(): DanceFloorData {
+export default function useDacnerFloorRead(): {
+  isLoading: boolean
+  floorData: DanceFloorData
+} {
   const account = useAccount()
   const network = useNetwork()
 
@@ -21,11 +24,12 @@ export default function useDacnerFloorRead(): DanceFloorData {
     dancers: [],
   }
 
+  let id = 0
+
   for (let i = 0; i < 3; i++) {
     floorData.dancers.push([])
     for (let j = 0; j < 3; j++) {
-      const id = (i + 1) * (j + 1) - 1
-      floorData.dancers[i].push(
+      floorData.dancers[i][j] =
         data.data?.[id] != null
           ? {
               lvl: Number(data.data[id][0]),
@@ -33,9 +37,9 @@ export default function useDacnerFloorRead(): DanceFloorData {
               price: 100,
             }
           : null
-      )
+      id++
     }
   }
 
-  return floorData
+  return { isLoading: data.isLoading, floorData }
 }

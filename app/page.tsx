@@ -1,4 +1,5 @@
 import GameCanvas from '@/components/canvas/game-canvas'
+import GameCanvasWrapper from '@/components/canvas/game-canvas-wrapper'
 import GameUpperSection from '@/components/canvas/game-upper-section'
 import Chat from '@/components/chat/chat'
 import Navbar from '@/components/structure/navbar'
@@ -16,7 +17,7 @@ export default function Home() {
               <GameUpperSection></GameUpperSection>
             </div>
             <div className="flex-1">
-              <GameCanvas></GameCanvas>
+              <GameCanvasWrapper />
             </div>
           </DancerProvider>
         </div>

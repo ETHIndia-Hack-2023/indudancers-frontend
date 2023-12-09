@@ -54,21 +54,21 @@ export default function Profile() {
   const { data: ensAvatar } = useEnsAvatar({ name: ensName })
   const { disconnect } = useDisconnect()
   const { chain, chains } = useNetwork()
-  const [error, setError] = useState('');
-  const { data: walletClient, isError, isLoading } = useWalletClient();
+  const [error, setError] = useState('')
+  const { data: walletClient, isError, isLoading } = useWalletClient()
 
   const changeNetwork = async (chainId: number) => {
     if (chain?.id != chainId) {
       try {
         await switchNetwork({
-          chainId
+          chainId,
         })
       } catch {
         await walletClient?.addChain({
-          chain: chains.find(chain => chain.id == chainId)!
-        });
+          chain: chains.find((chain) => chain.id == chainId)!,
+        })
         await switchNetwork({
-          chainId
+          chainId,
         })
       }
     }
@@ -103,16 +103,16 @@ export default function Profile() {
                 </SelectTrigger>
                 <SelectContent>
                   <>
-                  {SuppurtedChains.map(chain => {
-                    <SelectItem
-                    value={`${chain.id}`}
-                    onSelect={() => {
-                      changeNetwork(chain.id)
-                    }}
-                  >
-                    {chain.name}
-                  </SelectItem>
-                  })}
+                    {SuppurtedChains.map((chain) => {
+                      ;<SelectItem
+                        value={`${chain.id}`}
+                        onSelect={() => {
+                          changeNetwork(chain.id)
+                        }}
+                      >
+                        {chain.name}
+                      </SelectItem>
+                    })}
                   </>
                 </SelectContent>
               </Select>
@@ -124,7 +124,8 @@ export default function Profile() {
                 {chain && <div>Connected to {chain.name}</div>}
                 {chains && (
                   <div>
-                    Available chains: {SuppurtedChains.map((chain) => chain.name)}
+                    Available chains:{' '}
+                    {SuppurtedChains.map((chain) => chain.name)}
                   </div>
                 )}
               </>

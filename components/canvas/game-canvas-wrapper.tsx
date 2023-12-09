@@ -1,15 +1,22 @@
-import useDacnerFloorRead from '@/hooks/useDanceFloorRead'
+'use client'
+
 import React from 'react'
 import GameCanvas from './game-canvas'
+import Loader from '../ui/loaders/loader'
+import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 
 type Props = {}
 
 export default function GameCanvasWrapper({}: Props) {
   console.log('SUPER GET DATA')
 
-  const d = useDacnerFloorRead()
+  const { isLoading, floorData } = useDancerFloorRead()
 
-  console.log(d)
+  if (isLoading) {
+    return <Loader></Loader>
+  }
 
-  return <GameCanvas danceFloor={d}></GameCanvas>
+  console.log(floorData)
+
+  return <GameCanvas danceFloor={floorData}></GameCanvas>
 }

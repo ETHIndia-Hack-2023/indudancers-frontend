@@ -12,8 +12,8 @@ import {
 } from '@pixi/react'
 import { useEffect, useMemo, useState } from 'react'
 import { useDancerContext } from '@/hooks/useDanceContext'
-import useDacnerFloorRead from '@/hooks/useDanceFloorRead'
-import { DanceFloorData } from '@/types/game-types'
+import useDancerFloorRead from '@/hooks/useDanceFloorRead'
+import { DanceFloorData, hasOnCell } from '@/types/game-types'
 import { useIteration } from '@/hooks/useIteration'
 
 PIXI.settings.RESOLUTION = window.devicePixelRatio
@@ -28,42 +28,43 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   const minRnd = -10
   const maxRnd = 10
 
+  const dancerProps: IndiDancerProps[] = [
+    { x: 0, y: 0 },
+    { x: 150, y: 0 },
+    { x: 300, y: 0 },
+    { x: 0, y: 150 },
+    { x: 150, y: 150 },
+    { x: 300, y: 150 },
+    { x: 0, y: 300 },
+    { x: 150, y: 300 },
+    { x: 300, y: 300 },
+  ]
+
+  const dancerr = dancerProps.map((i, e) => {
+    const x = e % 3
+    const y = Math.trunc(e / 3)
+
+    console.log(`dancers: ${x}:${y}`)
+
+    if (!hasOnCell(x, y, danceFloor.dancers)) {
+      return <></>
+    }
+
+    console.log('FOUND BOUGHT!!!!')
+
+    return (
+      <IndiDancer
+        x={i.x + getRndInteger(minRnd, maxRnd)}
+        y={i.y + getRndInteger(minRnd, maxRnd)}
+        key={`${x}:${y}`}
+      />
+    )
+  })
+
   return (
     <Stage>
       <Container x={startingPoint.x} y={startingPoint.y}>
-        <IndiDancer x={0} y={0} />
-        <IndiDancer
-          x={150 + getRndInteger(minRnd, maxRnd)}
-          y={0 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={300 + getRndInteger(minRnd, maxRnd)}
-          y={0 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={0 + getRndInteger(minRnd, maxRnd)}
-          y={100 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={150 + getRndInteger(minRnd, maxRnd)}
-          y={100 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={300 + getRndInteger(minRnd, maxRnd)}
-          y={100 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={0 + getRndInteger(minRnd, maxRnd)}
-          y={200 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={150 + getRndInteger(minRnd, maxRnd)}
-          y={200 + getRndInteger(minRnd, maxRnd)}
-        />
-        <IndiDancer
-          x={300 + getRndInteger(minRnd, maxRnd)}
-          y={200 + getRndInteger(minRnd, maxRnd)}
-        />
+        {dancerr}
       </Container>
     </Stage>
   )
@@ -79,8 +80,6 @@ type IndiDancerProps = {
 }
 
 const IndiDancer = ({ x, y }: IndiDancerProps) => {
-  console.log('123123')
-
   const alienImages = ['dance_1.png', 'dance_2.png']
   const textureArray: PIXI.Texture[] = []
 
@@ -89,14 +88,11 @@ const IndiDancer = ({ x, y }: IndiDancerProps) => {
     textureArray.push(texture)
   }
 
-  console.log(textureArray)
-
-  const [width, height] = [500, 500]
-
   return (
     <Container x={x} y={y} scale={10}>
       <AnimatedSprite
-        animationSpeed={0.1}
+        animationSpeed={(Math.random() + 0.1) * 0.4}
+        currentFrame={Math.round(Math.random())}
         isPlaying={true}
         textures={textureArray}
         anchor={0.5}
