@@ -32,7 +32,6 @@ export default function ChatList(props: ChatListProps) {
     <div className="overflow-y-scroll h-full">
       {renderedMessages}
       <AlwaysScrollToBottom messages={props.messages.array} />
-      <Loader />
     </div>
   )
 }

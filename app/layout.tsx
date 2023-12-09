@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script src="https://pixijs.download/release/pixi.js"></script>
+      </head>
       <body className={inter.className}>
         <div className="pr-[10%] pl-[10%]">
           <Providers>{children}</Providers>

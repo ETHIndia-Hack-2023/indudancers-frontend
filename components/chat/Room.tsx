@@ -53,7 +53,7 @@ export default function Room(props: RoomProps) {
       <div className="flex justify-between items-center bg-gray-800 text-white p-4">
         <div>Room</div>
       </div>
-      <ChatList messages={props.messages} />
+      <ChatList isLoading={false} messages={props.messages} />
       <MessageInput hasLightPushPeers={true} sendMessage={onSend} />
     </div>
   )
