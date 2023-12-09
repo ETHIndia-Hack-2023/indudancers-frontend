@@ -16,12 +16,21 @@ import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { DanceFloorData, hasOnCell } from '@/types/game-types'
 import { useIteration } from '@/hooks/useIteration'
 
+// PIXI.Assets.loader.load('dance_1.png', "{% static 'dance_1.png' %}")
+// PIXI.Assets.loader.load('dance_1.png', "{% static 'dance_1.png' %}")
+
 PIXI.settings.RESOLUTION = window.devicePixelRatio
 PIXI.BaseTexture.defaultOptions.scaleMode = 0
 
 export type GameCanvasProps = {
   danceFloor: DanceFloorData
 }
+
+const alienImages = [
+  'https://raw.githubusercontent.com/ETHIndia-Hack-2023/indudancers-frontend/main/public/dance_1.png',
+  'https://raw.githubusercontent.com/ETHIndia-Hack-2023/indudancers-frontend/main/public/dance_2.png',
+]
+const textureArray: PIXI.Texture[] = []
 
 export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   const startingPoint = { x: 250, y: 200 }
@@ -65,12 +74,17 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   console.log(danceFloor)
 
   return (
-    <Stage renderOnComponentChange>
+    <Stage>
       <Container x={startingPoint.x} y={startingPoint.y}>
         {dancerr}
       </Container>
     </Stage>
   )
+}
+
+for (let i = 0; i < 2; i++) {
+  const texture = PIXI.Texture.from(alienImages[i])
+  textureArray.push(texture)
 }
 
 function getRndInteger(min: number, max: number) {
@@ -83,15 +97,15 @@ type HeroDancerProps = {
 }
 
 const DanceHero = ({ x, y }: HeroDancerProps) => {
-  const alienImages = ['dance_1.png', 'dance_2.png']
-  const textureArray: PIXI.Texture[] = []
+  // const alienImages = ['dance_1.png', 'dance_2.png']
+  // const textureArray: PIXI.Texture[] = []
 
-  for (let i = 0; i < 2; i++) {
-    const texture = new PIXI.Texture.from(alienImages[i])
-    textureArray.push(texture)
-  }
+  // for (let i = 0; i < 2; i++) {
+  //   const texture = PIXI.Texture.from(alienImages[i])
+  //   textureArray.push(texture)
+  // }
 
-  console.log(textureArray)
+  // console.log(textureArray)
 
   return (
     <Container x={x} y={y} scale={10}>
