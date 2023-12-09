@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  padding: 0px 10%;
-}
-
 @layer base {
   :root {
     --background: 266, 30%, 26%;
@@ -23,7 +19,8 @@ body {
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --accent-one: 49, 90%, 62%;
+    --accent-one: 34, 90%, 61%;
+    --accent-one-darker: 34, 63%, 45%;
     --accent-two: 21, 89%, 52%;
 
     --muted: 210 40% 96.1%;
