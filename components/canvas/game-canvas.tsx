@@ -16,8 +16,6 @@ import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { DanceFloorData, hasOnCell } from '@/types/game-types'
 import { useIteration } from '@/hooks/useIteration'
 
-
-
 export type GameCanvasProps = {
   danceFloor: DanceFloorData
 }
@@ -37,7 +35,6 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
       const texture = PIXI.Texture.from(danceImages[i])
       textureArray.push(texture)
     }
-    
   }, [])
   const startingPoint = { x: 250, y: 200 }
   const minRnd = -10
@@ -80,14 +77,13 @@ export default function GameCanvas({ danceFloor }: GameCanvasProps) {
   console.log(danceFloor)
 
   return (
-    <Stage>
+    <Stage className="rounded-3xl" options={{ backgroundAlpha: 0.3 }}>
       <Container x={startingPoint.x} y={startingPoint.y}>
         {dancerr}
       </Container>
     </Stage>
   )
 }
-
 
 function getRndInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min
@@ -99,6 +95,8 @@ type HeroDancerProps = {
 }
 
 const DanceHero = ({ x, y }: HeroDancerProps) => {
+  const [animDance, setAnimDance] = useState(true)
+
   // const alienImages = ['dance_1.png', 'dance_2.png']
   // const textureArray: PIXI.Texture[] = []
 
@@ -110,13 +108,20 @@ const DanceHero = ({ x, y }: HeroDancerProps) => {
   // console.log(textureArray)
 
   return (
-    <Container x={x} y={y} scale={10}>
+    <Container
+      x={x + getRndInteger(-10, 10)}
+      y={y + getRndInteger(-10, 10)}
+      scale={10}
+    >
       <AnimatedSprite
-        animationSpeed={(Math.random() + 0.1) * 0.4}
+        animationSpeed={0.1}
         currentFrame={Math.round(Math.random())}
         isPlaying={true}
         textures={textureArray}
         anchor={0.5}
+        onLoop={() => {
+          setAnimDance(!animDance)
+        }}
       />
     </Container>
   )

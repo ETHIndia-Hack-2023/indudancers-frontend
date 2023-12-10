@@ -44,7 +44,7 @@ const DANCERS_TO_BUY: ToBuyType[] = [
   { lvl: 5, coin_per_minute: 30, price: 30000 },
 ]
 
-export default function GameUpperSection({}: Props) {
+export default function GameUpperSection({ }: Props) {
   const [loading, setLoading] = useState(false)
   const { data: walletClient, isError, isLoading } = useWalletClient()
   const network = useNetwork()
@@ -81,11 +81,21 @@ export default function GameUpperSection({}: Props) {
 
     setLoading(true)
 
-    await writeContract({
-      ...GameContract,
-      address: Addresses.GameContract[network.chain?.id!]!,
-      functionName: 'buyFloor',
-    })
+    try {
+
+      await writeContract({
+        ...GameContract,
+        address: Addresses.GameContract[network.chain?.id!]!,
+        functionName: 'buyFloor',
+      })
+
+    } catch (e) {
+      toast({
+        title: 'Unable to buy floor!',
+        description: 'Maybe old floor is not empty?',
+      })
+      return;
+    }
 
     setLoading(false)
     toast({
@@ -112,13 +122,21 @@ export default function GameUpperSection({}: Props) {
     }
 
     setLoading(true)
+    try {
+      await writeContract({
+        ...GameContract,
+        address: Addresses.GameContract[network.chain?.id!]!,
+        functionName: 'buyDancer',
+        args: [level],
+      })
+    } catch (e) {
+      toast({
+        title: 'Unable to buy new dancer!',
+        description: 'Maybe you need a new floor?',
+      })
+      return;
+    }
 
-    await writeContract({
-      ...GameContract,
-      address: Addresses.GameContract[network.chain?.id!]!,
-      functionName: 'buyDancer',
-      args: [level],
-    })
 
     setLoading(false)
 
@@ -129,7 +147,7 @@ export default function GameUpperSection({}: Props) {
   }
 
   const buyNewDancer = async (info: ToBuyType) => {
-    
+
     buyDancer(BigInt(info.lvl));
   }
 
@@ -164,7 +182,7 @@ export default function GameUpperSection({}: Props) {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={'destructive'} onClick={() => {}}>
+            <Button variant={'destructive'} onClick={() => { }}>
               Buy dancer
             </Button>
           </DropdownMenuTrigger>
