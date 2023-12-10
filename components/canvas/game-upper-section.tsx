@@ -26,6 +26,7 @@ import {
 import useDancerFloorRead from '@/hooks/useDanceFloorRead'
 import { useToast } from '../ui/use-toast'
 import { formatEther } from 'viem'
+import AudioSection from './audio-section'
 
 type Props = {}
 
@@ -48,23 +49,15 @@ export default function GameUpperSection({}: Props) {
   const [loading, setLoading] = useState(false)
   const { data: walletClient, isError, isLoading } = useWalletClient()
   const network = useNetwork()
-  const account = useAccount()
   const { toast } = useToast()
-
-  //   const danceFloor = useContractRead({
-  //     ...GameContract,
-  //     address: Addresses.GameContract[network.chain?.id!]!,
-  //     functionName: 'getDanceFloor',
-  //     args: [account.address!, BigInt(0)],
-  //     watch: true,
-  //   })
+  const account = useAccount()
 
   const danceFloor = useDancerFloorRead()
 
   console.log('Dance floor', danceFloor)
 
   const buyFloor = async () => {
-    if (!SuppurtedChains.find(c => c.id == network?.chain?.id)) {
+    if (!SuppurtedChains.find((c) => c.id == network?.chain?.id)) {
       try {
         await switchNetwork({
           chainId: 23011913,
@@ -92,11 +85,10 @@ export default function GameUpperSection({}: Props) {
       title: 'New fance floor was bought!',
       description: 'You bought new dance floor',
     })
-
   }
 
   const buyDancer = async (level: bigint) => {
-    if (!SuppurtedChains.find(c => c.id == network?.chain?.id)) {
+    if (!SuppurtedChains.find((c) => c.id == network?.chain?.id)) {
       try {
         await switchNetwork({
           chainId: 23011913,
@@ -129,8 +121,7 @@ export default function GameUpperSection({}: Props) {
   }
 
   const buyNewDancer = async (info: ToBuyType) => {
-    
-    buyDancer(BigInt(info.lvl));
+    buyDancer(BigInt(info.lvl))
   }
 
   const getCoinsPerMinute = () => {
@@ -155,7 +146,8 @@ export default function GameUpperSection({}: Props) {
     <div className="flex justify-start gap-5 items-center">
       <div className="flex font-bold text-white outline-green-600 outline outline-4 p-2 rounded-2xl">
         <p>
-          Balance: {formatEther(danceFloor.claimable)} (+ {formatEther(danceFloor.tokens_per_minute)} coins per second)
+          Balance: {formatEther(danceFloor.claimable)} (+{' '}
+          {formatEther(danceFloor.tokens_per_minute)} coins per second)
         </p>
       </div>
       <div className="flex justify-start gap-5">
@@ -186,6 +178,7 @@ export default function GameUpperSection({}: Props) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <AudioSection address={(account.address ?? null)!} />
     </div>
   )
 }

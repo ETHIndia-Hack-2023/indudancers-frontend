@@ -32,7 +32,7 @@ export default function GameCanvasWrapper({}: Props) {
   return <GameCanvas danceFloor={floorData}></GameCanvas>
 }
 
-function getLastUrlPart(url: string) {
+export function getLastUrlPart(url: string) {
   const parts = url.split('/')
   return parts.at(-1)
 }
